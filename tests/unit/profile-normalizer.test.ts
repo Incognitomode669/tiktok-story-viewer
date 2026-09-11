@@ -51,3 +51,19 @@ it("expands the connection limit and stops when the reported total is reached", 
   expect(normalizeProfile(rows, "example", "following", undefined, 24).limited).toBe(true);
   expect(normalizeProfile(rows, "example", "following", undefined, 36).limited).toBe(false);
 });
+
+it("accepts a provider creator with a leading period without failing the repost list", () => {
+  const rows = [
+    { ...post, id: "1", fromProfileSection: "reposts", authorMeta: { name: "regular_creator" } },
+    { ...post, id: "2", fromProfileSection: "reposts", authorMeta: { name: ".peasy" } },
+  ];
+  const result = normalizeProfile(rows, "example", "reposts");
+  expect(result.items).toHaveLength(2);
+  expect(result.items[1].author?.username).toBe(".peasy");
+  expect(result.profile).toBeUndefined();
+  expect(() => normalizeProfile(rows, "another_account", "reposts")).toThrow("PROFILE_RESPONSE");
+});
+
+it.each(["bad/name", "bad?name", "bad name", "<script>"])("still rejects malformed provider handles: %s", name => {
+  expect(() => normalizeProfile([{ ...post, fromProfileSection: "reposts", authorMeta: { name } }], "example", "reposts")).toThrow("PROFILE_RESPONSE");
+});

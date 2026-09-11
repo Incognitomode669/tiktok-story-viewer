@@ -17,7 +17,9 @@ export function safeUrl(value: unknown, profileLink = false): string | undefined
 }
 function profile(value: unknown): ProfileSummary | undefined {
   const data = object(value);
-  const username = parseUsername(text(data.name) ?? "");
+  // Provider-returned creator handles can include legacy leading periods (observed: .peasy).
+  const rawName = text(data.name);
+  const username = rawName && /^[A-Za-z0-9_.]{1,24}$/.test(rawName) ? rawName : undefined;
   if (!username) return;
   return { username, displayName: text(data.nickName) ?? username, avatar: safeUrl(data.avatar), bio: text(data.signature), followers: count(data.fans), following: count(data.following), likes: count(data.heart), posts: count(data.video) };
 }
@@ -63,3 +65,4 @@ export function normalizeProfile(input: unknown, username: string, section: Prof
   const total = section === "followers" ? owner?.followers : section === "following" ? owner?.following : undefined;
   return { username, section, profile: owner, items: unique, limit, limited: unique.length >= limit && (total === undefined || unique.length < total) };
 }
+

@@ -60,3 +60,9 @@ The UI preserves existing rows if expansion fails, deduplicates by account ID,
 shows loaded versus reported total, and stops offering more when the provider
 returns fewer rows than requested or the reported total/lookup cap is reached.
 Profile totals do not guarantee that every account can be retrieved.
+
+On September 12, 2026, saved repost datasets for `ewwzel` included creator
+`.peasy`. Applying the search-input validator to that provider handle rejected
+an otherwise valid list. Provider creator handles now allow leading periods while
+retaining the character/length restriction. Search-input validation, requested
+profile ownership checks, section checks, and URL validation are unchanged.
