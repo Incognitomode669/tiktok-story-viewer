@@ -1,0 +1,6 @@
+.user-profile { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.user-profile__avatar { width: 36px; height: 36px; object-fit: cover; border-radius: 50%; flex-shrink: 0; border: 1px solid var(--color-control-border); }
+.user-profile__avatar--fallback { display: grid; place-items: center; background: var(--color-player-line); color: var(--color-surface); font-size: 16px; }
+.user-profile__details { min-width: 0; }
+.user-profile__name { margin: 0; color: var(--color-surface); font-size: 13px; font-weight: 550; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.user-profile__handle { margin: 3px 0 0; font-size: 11px; color: var(--color-player-muted); overflow: hidden; text-overflow: ellipsis; }

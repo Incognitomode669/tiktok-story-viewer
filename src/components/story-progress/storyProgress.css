@@ -1,0 +1,5 @@
+.story-progress { display: flex; gap: 4px; width: 100%; }
+.story-progress__segment { appearance: none; border: 0; flex: 1; width: 0; height: 3px; border-radius: 2px; overflow: hidden; background: var(--color-player-line); }
+.story-progress__segment::-webkit-progress-bar { background: var(--color-player-line); }
+.story-progress__segment::-webkit-progress-value { background: var(--color-surface); }
+.story-progress__segment::-moz-progress-bar { background: var(--color-surface); }

@@ -1,0 +1,37 @@
+.profile-explorer { min-width: 0; padding: 0; }
+.profile-explorer__header { display: flex; flex-direction: column; align-items: stretch; gap: 20px; }
+.profile-explorer__heading { margin: 0; font-size: 25px; letter-spacing: -.7px; overflow-wrap: anywhere; }
+.profile-explorer__bio { font-size: 13px; color: var(--color-muted); line-height: 1.6; max-width: 480px; margin: 8px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.profile-explorer__stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); text-align: center; gap: 12px; margin: 0; padding: 18px 20px; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-surface); }
+.profile-explorer__stats dt { font-size: 11px; color: var(--color-muted); }
+.profile-explorer__stats dd { font-size: 21px; font-weight: 600; margin: 7px 0 0; }
+.profile-explorer__tabs { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid var(--color-border); padding: 18px 0 12px; }
+.profile-explorer__tab { padding: 10px 12px; border: 0; border-radius: 6px; font-size: 12px; color: var(--color-muted); background: var(--color-clear); text-decoration: none; }
+.profile-explorer__tab:hover:not(:disabled) { color: var(--color-text); background: var(--color-accent-soft); }
+.profile-explorer__tab:disabled { opacity: .6; }
+.profile-explorer__tab--active { color: var(--color-surface); background: var(--color-text); }
+.profile-explorer__content { padding-top: 24px; }
+.profile-explorer__state { min-height: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; color: var(--color-muted); font-size: 14px; text-align: center; line-height: 1.6; }
+.profile-explorer__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.profile-explorer__card { min-width: 0; border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden; background: var(--color-surface); }
+.profile-explorer__preview { aspect-ratio: 9 / 16; background: var(--color-player-panel); }
+.profile-explorer__player { display: block; width: 100%; height: 100%; border: 0; object-fit: contain; }
+.profile-explorer__playback-error { display: grid; place-items: center; height: 100%; margin: 0; padding: 20px; color: var(--color-player-muted); font-size: 13px; line-height: 1.6; text-align: center; }
+.profile-explorer__image { display: block; width: 100%; height: 100%; object-fit: cover; }
+.profile-explorer__placeholder { display: grid; place-items: center; height: 100%; color: var(--color-player-muted); font-size: 30px; }
+.profile-explorer__card-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.profile-explorer__caption { margin: 0; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.profile-explorer__handle, .profile-explorer__note { font-size: 11px; color: var(--color-muted); line-height: 1.6; overflow-wrap: anywhere; }
+.profile-explorer__action { background: var(--color-clear); border: 1px solid var(--color-border); border-radius: 6px; padding: 8px 12px; color: var(--color-text); font-size: 12px; text-decoration: none; }
+.profile-explorer__action:hover { background: var(--color-accent-soft); }
+.profile-explorer__action:disabled { opacity: .6; }
+.profile-explorer__list-footer { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 0; text-align: center; }
+.profile-explorer__list-footer .profile-explorer__note { margin: 0; }
+.profile-explorer__card--person { display: flex; align-items: center; padding: 4px 10px; }
+.profile-explorer__card--person .profile-explorer__preview { width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; overflow: hidden; }
+.profile-explorer__grid--people { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.profile-explorer__photos { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
+.profile-explorer__photos .profile-explorer__image { flex: 0 0 100%; scroll-snap-align: start; }
+@media (max-width: 1050px) { .profile-explorer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .profile-explorer__grid--people { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 720px) { .profile-explorer__header { flex-direction: column; } .profile-explorer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .profile-explorer__grid--people { grid-template-columns: minmax(0, 1fr); } .profile-explorer__tab { padding: 9px 12px; } }
+

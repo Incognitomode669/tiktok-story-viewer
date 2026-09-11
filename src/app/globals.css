@@ -1,0 +1,32 @@
+@theme {
+  --color-page: #f5f3ee;
+  --color-surface: #ffffff;
+  --color-text: #222320;
+  --color-muted: #6c6d66;
+  --color-border: #dcdcd3;
+  --color-accent: #bd481f;
+  --color-accent-hover: #9f3815;
+  --color-accent-soft: #f5e7df;
+  --color-player: #191b1a;
+  --color-player-muted: #afb5b0;
+  --color-player-panel: #272b28;
+  --color-player-line: #464c47;
+  --color-error: #a02f41;
+  --color-green-deep: #287357;
+  --color-orange-text: #a5401c;
+  --color-on-orange: #ffffff;
+  --color-clear: transparent;
+  --color-shadow: #242a2412;
+  --color-overlay: #191b1ade;
+  --color-control: #ffffff14;
+  --color-control-hover: #ffffff26;
+  --color-control-border: #ffffff33;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--color-text); background: var(--color-page); font-family: var(--font-geist-sans), Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: default; }
+button, a, input { -webkit-tap-highlight-color: var(--color-clear); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+::selection { color: var(--color-text); background: var(--color-accent-soft); }

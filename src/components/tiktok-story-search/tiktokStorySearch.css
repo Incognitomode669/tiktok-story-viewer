@@ -1,0 +1,49 @@
+.story-search { max-width: 1360px; margin: 0 auto; padding: 0 40px; }
+.story-search__header { height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--color-border); }
+.story-search__brand { display: inline-flex; align-items: center; color: var(--color-text); font-size: 25px; font-weight: 650; letter-spacing: -1px; text-decoration: none; }
+.story-search__brand-dot { color: var(--color-accent); }
+.story-search__mark { color: var(--color-accent); display: grid; place-items: center; margin-right: 10px; }
+.story-search__mark svg { width: 27px; height: 27px; }
+.story-search__results { grid-area: results; min-width: 0; }
+.story-search__main { display: grid; min-height: calc(100svh - 150px); grid-template-columns: minmax(0, 1fr) 330px; grid-template-rows: auto 1fr; grid-template-areas: "search search" "results player"; gap: 36px 48px; align-items: start; padding: 32px 0 48px; }
+.story-search__intro { grid-area: search; display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 480px); gap: 40px; align-items: center; padding: 0 0 28px; border-bottom: 1px solid var(--color-border); }
+.story-search__title { font-weight: 550; text-wrap: balance; margin: 0 0 8px; font-size: 30px; letter-spacing: -1px; line-height: 1.2; margin-bottom: 8px; max-width: none; }
+.story-search__description { color: var(--color-muted); line-height: 1.75; margin: 0; font-size: 13px; max-width: 410px; }
+.story-search__form { margin-top: 0; }
+.story-search__preview { width: 100%; max-width: 330px; justify-self: center; grid-area: player; position: sticky; top: 24px; }
+.story-search__label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+.story-search__field { display: flex; align-items: center; gap: 6px; padding: 5px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; transition: border-color 150ms, box-shadow 150ms; }
+.story-search__field:has(.story-search__input:focus) { border-color: var(--color-accent); box-shadow: 0 0 0 3px var(--color-accent-soft); }
+.story-search__at { padding-left: 12px; color: var(--color-muted); font-size: 17px; }
+.story-search__input { min-width: 0; width: 100%; border: 0; outline: none; padding: 13px 4px; color: var(--color-text); background: var(--color-clear); font-size: 14px; }
+.story-search__input::placeholder { color: var(--color-muted); }
+.story-search__submit { flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 46px; padding: 12px 17px; border: 0; border-radius: 6px; background: var(--color-text); color: var(--color-surface); font-size: 12px; font-weight: 550; transition: background 150ms; }
+.story-search__submit:hover { background: var(--color-accent); }
+.story-search__submit:disabled { opacity: .6; }
+.story-search__submit svg { width: 17px; height: 17px; }
+.story-search__hint, .story-search__validation { margin: 12px 0 0; font-size: 11px; line-height: 1.6; color: var(--color-muted); }
+.story-search__validation { color: var(--color-error); }
+.story-search__preview-label { margin: 16px 0 5px; text-align: center; font-size: 12px; font-weight: 550; }
+.story-search__preview-hint { text-align: center; font-size: 10px; margin: 0; color: var(--color-muted); }
+.story-search__footer { min-height: 74px; padding: 20px 0; display: flex; gap: 30px; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border); }
+.story-search__footer > span { color: var(--color-muted); font-size: 12px; font-weight: 550; }
+.story-search__footer p { color: var(--color-muted); margin: 0; max-width: 500px; font-size: 10px; text-align: right; line-height: 1.7; }
+@media (max-width: 1050px) {
+  .story-search { padding: 0 32px; }
+  .story-search__submit { padding: 12px; gap: 8px; }
+  .story-search__main { grid-template-columns: minmax(0, 1fr) 280px; gap: 28px; }
+  .story-search__intro { grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr); gap: 24px; }
+}
+@media (max-width: 720px) {
+  .story-search { padding: 0 22px; }
+  .story-search__header { height: 72px; }
+  .story-search__brand { font-size: 23px; }
+  .story-search__footer { align-items: flex-start; }
+  .story-search__footer p { max-width: 235px; }
+  .story-search__main { grid-template-columns: minmax(0, 1fr); grid-template-areas: "search" "player" "results"; gap: 28px; padding-top: 24px; }
+  .story-search__intro { grid-template-columns: minmax(0, 1fr); gap: 22px; padding-bottom: 24px; }
+  .story-search__title { font-size: 28px; }
+  .story-search__preview { position: static; }
+}
+@media (prefers-reduced-motion: reduce) { .story-search__submit, .story-search__field { transition: none; } }
+

@@ -1,0 +1,17 @@
+.story-state { aspect-ratio: 9 / 16; width: 100%; background: var(--color-player); border-radius: 16px; padding: 16px; color: var(--color-surface); position: relative; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-shadow: 0 16px 36px var(--color-shadow); }
+.story-state__bars { display: flex; gap: 4px; }
+.story-state__bars span { flex: 1; height: 2px; border-radius: 2px; background: var(--color-player-line); }
+.story-state__content { text-align: center; padding: 20px 10px; }
+.story-state__art { width: 60px; height: 78px; margin: 0 auto 28px; display: grid; place-items: center; color: var(--color-player-muted); }
+.story-state__art svg { width: 42px; height: 54px; stroke-width: 1; }
+.story-state__tag { color: var(--color-player-muted); font-family: var(--font-geist-mono), monospace; font-size: 8px; letter-spacing: 1.5px; margin: 0 0 18px; }
+.story-state__title { white-space: pre-line; font-size: 25px; font-weight: 450; letter-spacing: -.8px; line-height: 1.25; margin: 0 0 14px; }
+.story-state__detail { font-size: 12px; line-height: 1.8; color: var(--color-player-muted); max-width: 230px; margin: 0 auto; }
+.story-state__bottom { display: flex; justify-content: center; align-items: center; gap: 12px; color: var(--color-player-line); padding-bottom: 9px; }
+.story-state__bottom span { height: 1px; width: 28px; background: var(--color-player-line); }
+.story-state__retry { margin: 22px auto 0; display: flex; align-items: center; gap: 10px; padding: 12px 18px; min-height: 44px; border: 1px solid var(--color-control-border); border-radius: 6px; color: var(--color-surface); background: var(--color-player-panel); }
+.story-state__skeleton { margin-top: 24px; display: grid; gap: 9px; justify-items: center; }
+.story-state__skeleton span { width: 70%; height: 7px; background: var(--color-player-line); border-radius: 3px; animation: story-state-pulse 1.3s ease-in-out infinite alternate; }
+.story-state__skeleton span:last-child { width: 40%; }
+@keyframes story-state-pulse { to { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) { .story-state__skeleton span { animation: none; } }

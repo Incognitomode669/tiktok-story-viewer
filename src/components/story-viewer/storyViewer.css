@@ -1,0 +1,21 @@
+.story-viewer { position: relative; aspect-ratio: 9 / 16; width: 100%; border-radius: 16px; overflow: hidden; background: var(--color-player); color: var(--color-surface); box-shadow: 0 16px 36px var(--color-shadow); }
+.story-viewer:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 5px; }
+.story-viewer__media { width: 100%; height: 100%; display: block; object-fit: contain; }
+.story-viewer__top { position: absolute; top: 0; left: 0; right: 0; z-index: 3; padding: 14px 14px 32px; background: linear-gradient(var(--color-overlay) 0%, var(--color-overlay) 72%, var(--color-clear) 100%); pointer-events: none; }
+.story-viewer__profile { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 18px; }
+.story-viewer__count { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.story-viewer__notice { position: absolute; inset: 0; z-index: 6; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; padding: 16px; background: var(--color-overlay); backdrop-filter: blur(6px); border-radius: inherit; font-size: 14px; line-height: 1.7; animation: story-viewer-notice-enter 240ms ease-out both; }
+.story-viewer__replay { border: 1px solid var(--color-control-border); border-radius: 6px; padding: 12px; background: var(--color-player-panel); color: var(--color-surface); }
+@keyframes story-viewer-notice-enter { from { opacity: 0; backdrop-filter: blur(0); } to { opacity: 1; backdrop-filter: blur(6px); } }
+@media (prefers-reduced-motion: reduce) { .story-viewer__play-toggle { transition: none; } .story-viewer__notice { animation: none; } }
+.story-viewer__navigation { position: absolute; inset: 0; display: flex; z-index: 2; }
+.story-viewer__tap-zone { flex: 1; min-width: 0; padding: 0; border: 0; background: var(--color-clear); touch-action: pan-y; user-select: none; -webkit-touch-callout: none; }
+.story-viewer__tap-zone:focus-visible { outline: 2px solid var(--color-surface); outline-offset: -5px; }
+.story-viewer__controls { position: absolute; z-index: 5; bottom: 16px; right: 12px; }
+.story-viewer__views { position: absolute; z-index: 3; bottom: 23px; left: 14px; margin: 0; display: flex; align-items: center; gap: 7px; max-width: calc(100% - 84px); padding: 7px 10px; border-radius: 18px; background: var(--color-overlay); color: var(--color-surface); font-size: 11px; line-height: 1.4; pointer-events: none; }
+.story-viewer__views svg { width: 16px; height: 16px; flex-shrink: 0; }
+.story-viewer__play-toggle { position: absolute; z-index: 4; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid var(--color-control-border); border-radius: 50%; color: var(--color-surface); background: var(--color-overlay); opacity: 0; pointer-events: none; }
+.story-viewer__play-toggle--paused, .story-viewer__play-toggle:focus-visible { opacity: 1; pointer-events: auto; }
+.story-viewer__play-toggle:disabled { visibility: hidden; }
+
+

@@ -1,0 +1,9 @@
+.story-volume { display: flex; flex-direction: column-reverse; align-items: center; width: 44px; border-radius: 24px; background: var(--color-clear); color: var(--color-surface); transition: background 150ms; }
+.story-volume:hover, .story-volume:has(:focus-visible), .story-volume--expanded { background: var(--color-control-hover); backdrop-filter: blur(12px); }
+.story-volume__toggle { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--color-clear); color: var(--color-surface); }
+.story-volume__toggle:hover, .story-volume__toggle:focus-visible { background: var(--color-control-hover); }
+.story-volume__slider { writing-mode: vertical-lr; direction: rtl; width: 36px; height: 0; min-height: 0; margin: 0; padding: 0; opacity: 0; visibility: hidden; pointer-events: none; cursor: pointer; accent-color: var(--color-surface); transition: height 150ms, opacity 150ms; }
+.story-volume:hover .story-volume__slider, .story-volume:has(:focus-visible) .story-volume__slider, .story-volume--expanded .story-volume__slider { height: 100px; margin-top: 16px; opacity: 1; visibility: visible; pointer-events: auto; }
+.story-volume__slider:focus-visible { outline: 2px solid var(--color-surface); outline-offset: 2px; border-radius: 3px; }
+@media (prefers-reduced-motion: reduce) { .story-volume, .story-volume__slider { transition: none; } }
+
