@@ -9,20 +9,22 @@ export const copy = {
     playerTitle: (title: string) => `TikTok player: ${title}`,
     playbackError: "This media couldn’t be played. Close the player and try again, or reload the section.",
     heading: "Explore this profile",
-    sections: { posts: "Posts", reposts: "Reposts", highlights: "Highlights", followers: "Followers", following: "Following" },
+    sections: { posts: "Posts", reposts: "Reposts", highlights: "Collections", followers: "Followers", following: "Following" },
     likes: "Likes", stories: "Stories", load: "Load section", loading: "Loading this section…", retry: "Try again",
     prompt: "Choose a section to load public content from this account.",
     empty: "No content returned. This section may be empty or unavailable to the provider.",
     limited: "Showing up to 12 results returned by the provider.",
-    experimental: "Highlights are experimental. Availability depends on the account and provider.",
+    experimental: "TikTok playlists and mixes shared by this account.",
     open: "Open on TikTok", untitled: "Untitled", back: "Back to collections", photo: "Post preview",
     unavailable: "—", posts: "Posts", collectionCount: (count: number) => `${count} posts`,
     errors: {
       PROFILE_INPUT: "Check the username and try again.",
       PROFILE_RESPONSE: "The provider returned an unsupported result. Please try again later.",
       PROFILE_UNAVAILABLE: "This section could not be retrieved. It may be restricted, empty, or temporarily unavailable.",
-      PROFILE_ACCESS: "The provider needs access or available Apify credit. Check the connected account.",
-      PROFILE_COLLECTION_EXPIRED: "This collection lookup has expired. Reload the Highlights section.",
+      PROFILE_CREDIT: "The provider requires paid credit for this request. Check your provider balance; free credit may not cover this endpoint.",
+      PROFILE_RESTRICTED: "TikTok reports that this account is hiding this list.",
+      PROFILE_ACCESS: "The provider could not authorize this request. Check the configured API key.",
+      PROFILE_COLLECTION_EXPIRED: "This collection lookup has expired. Reload the Collections section.",
       PROFILE_BUSY: "Too many lookups are running. Please wait a minute and try again.",
     },
   },
@@ -70,7 +72,8 @@ export const copy = {
   storyCount: (count: number) => `${count} ${count === 1 ? "Story" : "Stories"} available`,
   errors: {
     INVALID_USERNAME: "Enter a valid TikTok username: up to 24 letters, numbers, underscores or periods, with no period at the end.",
-    NOT_CONFIGURED: "The Story service is not configured yet. The site owner needs to add the Apify token.",
+    NOT_CONFIGURED: "The Story service is not configured yet. Add KONBINI_API_KEY to the server environment.",
+    PROVIDER_CREDIT: "KonbiniAPI credits are exhausted. Check the connected account balance.",
     PROVIDER_ERROR: "The Story provider is unavailable right now. Please try again later.",
     PROVIDER_RESPONSE_CHANGED: "The provider returned an unsupported response. Please try again later.",
     RATE_LIMITED: "Too many lookups right now. Please wait a minute and try again.",
@@ -82,3 +85,5 @@ export const copy = {
     NETWORK_ERROR: "Couldn’t connect. Check your connection and try again.",
   },
 } as const;
+
+

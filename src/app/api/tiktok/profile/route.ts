@@ -20,8 +20,9 @@ export async function POST(request: NextRequest) {
     if (!allowStoryLookup()) return NextResponse.json({ success: false, code: "PROFILE_BUSY" }, { status: 429, headers });
     return NextResponse.json({ success: true, ...await getProfileSection(username, body.section as ProfileSection, body.highlightId, limit) }, { headers });
   } catch (error) {
-    const known = ["PROFILE_RESPONSE", "PROFILE_UNAVAILABLE", "PROFILE_COLLECTION_EXPIRED", "PROFILE_BUSY", "PROFILE_ACCESS"];
+    const known = ["PROFILE_RESPONSE", "PROFILE_UNAVAILABLE", "PROFILE_COLLECTION_EXPIRED", "PROFILE_BUSY", "PROFILE_ACCESS", "PROFILE_CREDIT", "PROFILE_RESTRICTED"];
     const code = error instanceof Error && known.includes(error.message) ? error.message : "PROFILE_UNAVAILABLE";
     return NextResponse.json({ success: false, code }, { status: code === "PROFILE_BUSY" ? 429 : 502, headers });
   }
 }
+

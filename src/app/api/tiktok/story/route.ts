@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { parseUsername } from "@/lib/username";
 import { allowStoryLookup } from "@/lib/rate-limit";
-import { ApifyTikTokStoryProvider } from "@/services/tiktok/apify-story-provider";
+import { KonbiniStoryProvider } from "@/services/konbini/story-provider";
 import { StoryProviderError } from "@/services/tiktok/story-provider";
 import { StoryService } from "@/services/tiktok/story-service";
 import type { StoryApiResponse } from "@/types/tiktok-story";
 
 export const runtime = "nodejs";
 export const maxDuration = 65;
-const service = new StoryService(new ApifyTikTokStoryProvider());
+const service = new StoryService(new KonbiniStoryProvider());
 
 export async function GET(request: NextRequest) {
   const headers: Record<string, string> = { "Cache-Control": "no-store" };
@@ -24,3 +24,4 @@ export async function GET(request: NextRequest) {
     return NextResponse.json<StoryApiResponse>({ success: false, error: { code: safe.code, message: safe.message } }, { status: safe.status, headers });
   }
 }
+
