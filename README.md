@@ -1,8 +1,7 @@
 # Storyroom
 
 Storyroom uses **KonbiniAPI only** for profile details, Stories, Posts, Reposts,
-Collections, Followers, and Following. Apify and TikHub keys are no longer used by
-application routes. Existing playback gestures and shared Story volume remain intact.
+Collections, Followers, and Following. No alternate providers are configured. Existing playback gestures and shared Story volume remain intact.
 
 ## Run locally
 
@@ -22,7 +21,7 @@ Restart the server after changing environment variables.
 2. Generate an API key in the dashboard.
 3. Set `KONBINI_API_KEY=your_key` in `.env.local` (copy `.env.example` only if the file
    does not already exist). Keep it server-only; do not use `NEXT_PUBLIC_`.
-4. Restart the server. Old Apify/TikHub variables may be removed; they are ignored.
+4. Restart the server. Only KONBINI_API_KEY is used.
 
 Konbini's free allowance is one-time, not recurring. Check current pricing at
 https://konbiniapi.com/pricing. The application does not buy credits, change plans,

@@ -1,4 +1,4 @@
-import { object, safeUrl } from "@/services/tiktok-profile/normalize-profile";
+import { object, safeUrl, playAddress } from "./values";
 import type { ProfileItem, ProfileSummary } from "@/types/tiktok-profile";
 import type { TikTokStory } from "@/types/tiktok-story";
 export const text = (value: unknown) => typeof value === "string" && value ? value : undefined;
@@ -17,10 +17,13 @@ export function collection(data: Record<string, unknown>, expectedPath: string) 
   return { rows: data.orderedItems, cursor: text(data.nextCursor) ?? null };
 }
 export function video(row: Record<string, unknown>, resolve: MediaResolver) {
+  const attachments = array(row.attachment).map(object).filter(media => media.type === "Video");
+  const play = attachments.flatMap(media => array(media.url)).map(playAddress).find(Boolean);
+  if (play) return resolve(play, undefined, text(row.entityId));
   for (const value of array(row.attachment)) {
     const media = object(value);
     if (media.type !== "Video") continue;
-    for (const url of array(media.url)) { const result = resolve(url, media.headers, text(row.entityId)); if (result) return result; }
+    for (const url of array(media.url)) { const result = resolve(url, undefined, text(row.entityId)); if (result) return result; }
   }
 }
 export function item(value: unknown, kind: "person" | "collection" | "post", resolve: MediaResolver, owner?: string): ProfileItem {
@@ -35,7 +38,7 @@ export function item(value: unknown, kind: "person" | "collection" | "post", res
     return { id, title: text(row.name) ?? "", count: count(row.totalItems), cover: image(row.image), author };
   }
   if (!["Video", "Image"].includes(String(row.type))) throw new Error("PROFILE_RESPONSE");
-  return { id, title: text(row.content) ?? "", author, cover: image(row.preview) ?? image(row.image), url: `https://www.tiktok.com/@${author.username}/video/${id}`, video: video(row, resolve) };
+  return { id, title: text(row.content) ?? "", author, cover: image(row.preview) ?? image(row.image), url: `https://www.tiktok.com/@${author.username}/video/${id}`, video: video(row, resolve), images: array(row.image).map(value => image(value)).filter((url): url is string => Boolean(url)) };
 }
 export function stories(rows: unknown[], username: string, resolve: MediaResolver, now = Date.now()): TikTokStory[] {
   const result: TikTokStory[] = [];

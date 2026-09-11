@@ -10,8 +10,8 @@ import { StoryVolumeControl } from "./StoryVolumeControl";
 import type { StoryAudio } from "./useStoryAudio";
 import { StoryTouchSurface } from "./StoryTouchSurface";
 
-type Props = { story: TikTokStory; audio: StoryAudio; index: number; count: number; previous: () => void; next: () => void; replay: () => void };
-export function StoryMedia({ story, audio, index, count, previous, next, replay }: Props) {
+type Props = { story: TikTokStory; audio: StoryAudio; index: number; count: number; previous: () => void; next: () => void; replay: () => void; retry: () => void };
+export function StoryMedia({ story, audio, index, count, previous, next, replay, retry }: Props) {
   const [finished, setFinished] = useState(false);
   const end = useCallback(() => {
     if (index < count - 1) next();
@@ -31,7 +31,7 @@ export function StoryMedia({ story, audio, index, count, previous, next, replay 
     </div>
     <StoryTouchSurface previous={previous} next={next} onHoldChange={setHeld} />
     {story.views !== undefined && <p className="story-viewer__views"><StoryIcon name="eye" />{copy.storyViews(story.views)}</p>}
-    {(failed || finished) && <div className="story-viewer__notice" role="status"><p>{failed ? copy.mediaError : copy.finished}</p>{finished && <button type="button" className="story-viewer__replay" onClick={replay}>{copy.replay}</button>}</div>}
+    {(failed || finished) && <div className="story-viewer__notice" role="status"><p>{failed ? copy.mediaError : copy.finished}</p>{failed && <button type="button" className="story-viewer__replay" onClick={retry}>{copy.retryPlayback}</button>}{finished && <button type="button" className="story-viewer__replay" onClick={replay}>{copy.replay}</button>}</div>}
     <button type="button" className={`story-viewer__play-toggle${paused ? " story-viewer__play-toggle--paused" : ""}`} disabled={finished || failed} aria-label={paused ? copy.play : copy.pause} onClick={() => setPaused(!paused)}><StoryIcon name={paused ? "play" : "pause"} /></button>
     <div className="story-viewer__controls">
       {story.type === "video" && <StoryVolumeControl audio={audio} />}

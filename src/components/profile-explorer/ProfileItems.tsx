@@ -21,7 +21,7 @@ export function ProfileItems({ items, section, collection, onCollection }: { ite
         {item.author && <span className="profile-explorer__handle">@{item.author.username}</span>}
         {section === "highlights" && !collection && <button className="profile-explorer__action" onClick={() => onCollection(item.id)}>{typeof item.count === "number" ? copy.profile.collectionCount(item.count) : copy.profile.load}</button>}
         {people && item.url && <a className="profile-explorer__action" href={item.url} target="_blank" rel="noopener noreferrer">{copy.profile.open}</a>}
-        {!people && (item.video || ((section === "posts" || section === "reposts" || collection) && /^\d+$/.test(item.id))) && <button type="button" className="profile-explorer__action" aria-pressed={playing === item.id} onClick={() => setPlaying(playing === item.id ? undefined : item.id)}>{playing === item.id ? copy.profile.closePlayer : copy.profile.watch}</button>}
+        {!people && item.video && <button type="button" className="profile-explorer__action" aria-pressed={playing === item.id} onClick={() => setPlaying(playing === item.id ? undefined : item.id)}>{playing === item.id ? copy.profile.closePlayer : copy.profile.watch}</button>}
       </div>
       {item.images && <div className="profile-explorer__photos">{item.images.map(src => <Preview key={src} src={src} />)}</div>}
     </article>)}

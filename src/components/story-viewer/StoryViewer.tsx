@@ -19,6 +19,6 @@ export function StoryViewer({ stories, audio }: { stories: TikTokStory[]; audio:
   const story = stories[index];
   if (!story) return null;
   return <div className="story-viewer" tabIndex={0} onKeyDown={keyboard} role="region" aria-label={copy.viewerLabel}>
-    <StoryMedia key={`${index}-${story.id}-${replayKey}`} story={story} audio={audio} index={index} count={stories.length} previous={previous} next={next} replay={() => { setIndex(0); setReplayKey((value) => value + 1); }} />
+    <StoryMedia key={`${index}-${story.id}-${replayKey}`} story={story} audio={audio} index={index} count={stories.length} retry={() => setReplayKey(value => value + 1)} previous={previous} next={next} replay={() => { setIndex(0); setReplayKey((value) => value + 1); }} />
   </div>;
 }

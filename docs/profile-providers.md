@@ -1,7 +1,6 @@
 # KonbiniAPI profile sections
 
-KonbiniAPI is the sole active provider. `KONBINI_API_KEY` is required; old Apify and
-TikHub environment variables are ignored. API documentation:
+KonbiniAPI is the sole active provider. `KONBINI_API_KEY` is required; no alternate provider keys are used. API documentation:
 https://docs.konbiniapi.com/reference/api/tiktok
 
 - Profile: `/v1/tiktok/users/{username}` maps Person fields to profile name, avatar,
@@ -17,8 +16,7 @@ https://docs.konbiniapi.com/reference/api/tiktok
   first appear in that account's cached collection list.
 
 Profile lists use OrderedCollectionPage `orderedItems` and `nextCursor`, validate
-`partOf`, deduplicate IDs, and map only safe public fields. Existing embedded playback
-remains available for photo posts; video attachments play through the media stream.
+`partOf`, deduplicate IDs, and map only safe public fields. Photo posts render their supplied images; video attachments play through the media stream.
 
 Five-minute profile/page caches hold at most 100 entries each. Followers/Following
 fetch up to 30 accounts per page. View more reuses buffered entries and fetches the
@@ -31,3 +29,5 @@ Live verification September 12, 2026: profile, reposts, followers, following, po
 collection listing and collection posts returned usable data. TikTok's account
 returned five collections; the first collection returned three posts. Story checks
 returned no items, so active Story playback remains unverified.
+
+Latest production verification: ewwzel returned three active Stories. All three decoded in Chrome at 576x1024 with no media errors; durations were 26.4s, 6.105s and 22.777s. This supersedes the earlier empty-Story test limitation.

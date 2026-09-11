@@ -1,5 +1,5 @@
 import "server-only";
-import { object } from "@/services/tiktok-profile/normalize-profile";
+import { object } from "./values";
 export class KonbiniError extends Error {
   constructor(public readonly status: number, public readonly code: string) { super(code); }
 }
