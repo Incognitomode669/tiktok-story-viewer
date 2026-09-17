@@ -1,3 +1,4 @@
+import { credentialScope } from "./credentials";
 import "server-only";
 import type { ProfileResult, ProfileSection, ProfileSummary, ProfileItem } from "@/types/tiktok-profile";
 import { konbiniRequest, KonbiniError } from "./client";
@@ -13,30 +14,31 @@ function prune<T extends { expires: number }>(cache: Map<string, T>) {
   if (cache.size >= 100) cache.delete(cache.keys().next().value!);
 }
 export async function getKonbiniProfile(username: string, signal: AbortSignal): Promise<ProfileSummary> {
+  const scoped = `${credentialScope()}:${username}`;
   prune(profiles);
-  const cached = profiles.get(username);
+  const cached = profiles.get(scoped);
   if (cached) return cached.value;
-  const existing = profilePending.get(username);
+  const existing = profilePending.get(scoped);
   if (existing) return existing;
   const request = (async () => {
     const data = await konbiniRequest(`users/${encodeURIComponent(username)}`, {}, signal);
     if (data.isPrivate === true) throw new KonbiniError(403, "private_account");
     const value = profile(data);
     if (value.username.toLowerCase() !== username.toLowerCase()) throw new Error("PROFILE_RESPONSE");
-    profiles.set(username, { value, expires: Date.now() + 300_000 });
+    profiles.set(scoped, { value, expires: Date.now() + 300_000 });
     return value;
-  })().finally(() => profilePending.delete(username));
-  profilePending.set(username, request);
+  })().finally(() => profilePending.delete(scoped));
+  profilePending.set(scoped, request);
   return request;
 }
 export async function getKonbiniSection(username: string, section: ProfileSection, collectionId?: string, limit = 12): Promise<ProfileResult> {
-  const key = `${username}:${section}:${collectionId ?? ""}`;
+  const key = `${credentialScope()}:${username}:${section}:${collectionId ?? ""}`;
   const existing = pending.get(key);
   if (existing) { await existing; return getKonbiniSection(username, section, collectionId, limit); }
   if (pending.size >= 2) throw new Error("PROFILE_BUSY");
   const run = async (): Promise<ProfileResult> => {
     prune(pages);
-    if (collectionId && !pages.get(`${username}:highlights:`)?.items.some(row => row.id === collectionId)) throw new Error("PROFILE_COLLECTION_EXPIRED");
+    if (collectionId && !pages.get(`${credentialScope()}:${username}:highlights:`)?.items.some(row => row.id === collectionId)) throw new Error("PROFILE_COLLECTION_EXPIRED");
     const signal = AbortSignal.timeout(55_000);
     const owner = await getKonbiniProfile(username, signal);
     const people = section === "followers" || section === "following";

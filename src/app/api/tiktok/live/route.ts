@@ -1,10 +1,11 @@
+import { withCredentials } from "@/services/konbini/credentials";
 import { parseUsername } from "@/lib/username";
 import { allowStoryLookup } from "@/lib/rate-limit";
 import { getLive } from "@/services/konbini/live";
 import { KonbiniError } from "@/services/konbini/client";
 export const runtime = "nodejs";
 export const maxDuration = 65;
-export async function GET(request: Request) {
+async function handle(request: Request) {
   const headers = { "Cache-Control": "no-store" };
   const username = parseUsername(new URL(request.url).searchParams.get("username") ?? "");
   if (!username) return Response.json({ error: "Enter a valid username." }, { status: 400, headers });
@@ -16,3 +17,5 @@ export async function GET(request: Request) {
     return Response.json({ error: message }, { status: 502, headers });
   }
 }
+
+export const GET = withCredentials(handle);

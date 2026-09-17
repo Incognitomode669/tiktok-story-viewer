@@ -1,3 +1,4 @@
+import { withCredentials } from "@/services/konbini/credentials";
 import { NextRequest, NextResponse } from "next/server";
 import { parseUsername } from "@/lib/username";
 import { allowStoryLookup } from "@/lib/rate-limit";
@@ -10,7 +11,7 @@ export const runtime = "nodejs";
 export const maxDuration = 65;
 const service = new StoryService(new KonbiniStoryProvider());
 
-export async function GET(request: NextRequest) {
+async function handle(request: NextRequest) {
   const headers: Record<string, string> = { "Cache-Control": "no-store" };
   try {
     const username = parseUsername(request.nextUrl.searchParams.get("username") ?? "");
@@ -25,3 +26,5 @@ export async function GET(request: NextRequest) {
   }
 }
 
+
+export const GET = withCredentials(handle);

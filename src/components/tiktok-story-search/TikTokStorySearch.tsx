@@ -11,6 +11,7 @@ import { useStoryAudio } from "@/components/story-viewer/useStoryAudio";
 import { ProfileExplorer } from "@/components/profile-explorer/ProfileExplorer";
 import { ProfileExplorerEmpty } from "@/components/profile-explorer/ProfileExplorerEmpty";
 import { parseUsername } from "@/lib/username";
+import { ApiKeySettings } from "./ApiKeySettings";
 
 const subscribe = () => () => {};
 const clientReady = () => true;
@@ -26,6 +27,7 @@ export function TikTokStorySearch() {
   return <div className="story-search">
     <header className="story-search__header">
       <Link href="/" className="story-search__brand" aria-label={copy.brandLabel}><span className="story-search__mark"><StoryIcon name="frame" /></span>{copy.brand}<span className="story-search__brand-dot">.</span></Link>
+      <ApiKeySettings />
     </header>
     <main className="story-search__main">
       <section className="story-search__intro" aria-labelledby="page-title">

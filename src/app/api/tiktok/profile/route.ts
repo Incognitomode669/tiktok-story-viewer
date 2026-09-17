@@ -1,3 +1,4 @@
+import { withCredentials } from "@/services/konbini/credentials";
 import { NextRequest, NextResponse } from "next/server";
 import { parseUsername } from "@/lib/username";
 import { allowStoryLookup } from "@/lib/rate-limit";
@@ -6,7 +7,7 @@ import { profileSections, type ProfileSection } from "@/types/tiktok-profile";
 
 export const runtime = "nodejs";
 export const maxDuration = 65;
-export async function POST(request: NextRequest) {
+async function handle(request: NextRequest) {
   const headers = { "Cache-Control": "no-store" };
   try {
     const body = await request.json();
@@ -26,3 +27,5 @@ export async function POST(request: NextRequest) {
   }
 }
 
+
+export const POST = withCredentials(handle);

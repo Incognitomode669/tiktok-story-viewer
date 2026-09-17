@@ -1,9 +1,10 @@
+import { credentialScope } from "./credentials";
 import "server-only";
 import { randomUUID } from "node:crypto";
 import { KonbiniError, konbiniRequest } from "./client";
 import { object, playAddress } from "./values";
 
-type Entry = { url?: string; videoId?: string; playUrl?: string; headers: Record<string, string>; expires: number };
+type Entry = { scope: string; url?: string; videoId?: string; playUrl?: string; headers: Record<string, string>; expires: number };
 type Download = { created: number; expires: number; request: Promise<string> };
 const shared = globalThis as typeof globalThis & { storyroomKonbiniMediaV3?: Map<string, Entry> };
 const media = shared.storyroomKonbiniMediaV3 ??= new Map();
@@ -31,13 +32,14 @@ export function registerMedia(value: unknown, rawHeaders?: unknown, videoId?: st
     }
   }
   const id = randomUUID();
-  media.set(id, { url, videoId, playUrl: videoId ? playAddress(value) : undefined, headers, expires: Date.now() + 24 * 60 * 60_000 });
+  media.set(id, { scope: credentialScope(), url, videoId, playUrl: videoId ? playAddress(value) : undefined, headers, expires: Date.now() + 24 * 60 * 60_000 });
   return `/api/tiktok/media?id=${id}`;
 }
 function download(videoId: string, playUrl?: string): Download {
+  const scoped = `${credentialScope()}:${videoId}`;
   const now = Date.now();
   for (const [id, entry] of downloads) if (entry.expires <= now) downloads.delete(id);
-  const cached = downloads.get(videoId);
+  const cached = downloads.get(scoped);
   if (cached) return cached;
   if (downloads.size >= 500) downloads.delete(downloads.keys().next().value!);
   const entry: Download = { created: now, expires: now + 300_000, request: Promise.resolve("") };
@@ -49,13 +51,13 @@ function download(videoId: string, playUrl?: string): Download {
     entry.expires = Date.now() + 30_000;
     throw error;
   });
-  downloads.set(videoId, entry);
+  downloads.set(scoped, entry);
   return entry;
 }
 const failure = (status: number, code: string) => new Response(null, { status, headers: { "Cache-Control": "no-store", "X-Storyroom-Media-Error": code } });
 export async function serveMedia(request: Request): Promise<Response> {
   const entry = media.get(new URL(request.url).searchParams.get("id") ?? "");
-  if (!entry || entry.expires <= Date.now()) return failure(404, "lookup_expired");
+  if (!entry || entry.scope !== credentialScope() || entry.expires <= Date.now()) return failure(404, "lookup_expired");
   const range = request.headers.get("range");
   if (range && !/^bytes=(?:\d+-\d*|-\d+)$/.test(range)) return failure(416, "invalid_range");
   if (request.signal.aborted) return failure(499, "request_cancelled");

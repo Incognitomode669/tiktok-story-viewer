@@ -1,10 +1,11 @@
+import { credentialScope } from "./credentials";
 import "server-only";
 import { randomUUID } from "node:crypto";
 import { konbiniRequest, KonbiniError } from "./client";
 import { object } from "./values";
 
 type LiveResult = { isLive: boolean; stream?: string; title?: string; viewers?: number; checkedAt: string };
-const globals = globalThis as typeof globalThis & { storyroomLiveStreams?: Map<string, { url: string; expires: number }> };
+const globals = globalThis as typeof globalThis & { storyroomLiveStreams?: Map<string, { scope: string; url: string; expires: number }> };
 const streams = globals.storyroomLiveStreams ??= new Map();
 const cache = new Map<string, { expires: number; result: Promise<LiveResult> }>();
 
@@ -18,11 +19,12 @@ export function trustedLiveUrl(value: unknown): string | undefined {
 }
 
 export function getLive(username: string): Promise<LiveResult> {
-  const existing = cache.get(username);
+  const scoped = `${credentialScope()}:${username}`;
+  const existing = cache.get(scoped);
   if (existing && existing.expires > Date.now()) return existing.result;
   const result = lookup(username);
   if (cache.size >= 100) cache.delete(cache.keys().next().value!);
-  cache.set(username, { expires: Date.now() + 30_000, result });
+  cache.set(scoped, { expires: Date.now() + 30_000, result });
   return result;
 }
 
@@ -52,7 +54,7 @@ async function lookup(username: string): Promise<LiveResult> {
   for (const [id, entry] of streams) if (entry.expires < Date.now()) streams.delete(id);
   if (streams.size >= 300) streams.delete(streams.keys().next().value!);
   const id = randomUUID();
-  streams.set(id, { url: source, expires: Date.now() + 10 * 60_000 });
+  streams.set(id, { scope: credentialScope(), url: source, expires: Date.now() + 10 * 60_000 });
   return { isLive: true, stream: `/api/tiktok/live/stream?id=${id}`, checkedAt,
     title: typeof data.content === "string" ? data.content : undefined,
     viewers: typeof data.viewerCount === "number" && Number.isSafeInteger(data.viewerCount) && data.viewerCount >= 0 ? data.viewerCount : undefined };
@@ -61,7 +63,7 @@ async function lookup(username: string): Promise<LiveResult> {
 export async function serveLive(request: Request): Promise<Response> {
   const entry = streams.get(new URL(request.url).searchParams.get("id") ?? "");
   const headers = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
-  if (!entry || entry.expires < Date.now()) return new Response(null, { status: 410, headers });
+  if (!entry || entry.scope !== credentialScope() || entry.expires < Date.now()) return new Response(null, { status: 410, headers });
   const controller = new AbortController();
   const abort = () => controller.abort();
   request.signal.addEventListener("abort", abort, { once: true });

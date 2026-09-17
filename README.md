@@ -57,3 +57,9 @@ Uses Konbini's documented user live endpoint and mpegts.js for FLV playback. Oth
 Documentation: https://docs.konbiniapi.com/reference/api/tiktok/get-user-live-stream and https://github.com/xqq/mpegts.js
 
 Validation: production build, lint, 21 unit tests, and browser checks for real offline status, stream failure, and player cleanup passed. Konbini reported ewwzel offline during verification; actual live broadcast decoding remains unverified.
+
+### Personal API keys
+
+Open **API settings** in the header, paste a KonbiniAPI key, and choose **Save key**, then **Done**. Saving checks formatting; the next provider request checks authorization. The page reloads to clear previous client results. **Remove personal key** returns to the environment key if configured.
+
+Personal keys stay in server process memory for up to 24 hours and are removed on restart. The browser receives an opaque HttpOnly, SameSite=Strict session cookie (Secure over HTTPS), not the key. Provider caches and media handles are scoped to the key session. An expired session cookie does not silently fall back to the environment key. For multiple server instances, replace this process-local session store with a shared secure store before using personal keys across instances.
