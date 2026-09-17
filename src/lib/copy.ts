@@ -1,4 +1,12 @@
 export const copy = {
+  live: {
+    heading: "Live", refresh: "Refresh", loading: "Checking live status…",
+    offline: "is not live right now.", failed: "Live status could not be loaded.",
+    player: "TikTok live broadcast", unsupported: "Live playback is not supported in this browser. Try a current desktop Chrome or Edge.",
+    disconnected: "The broadcast stopped or the connection was lost. Refresh to reconnect.",
+    playHint: "Press play to watch with sound. Use the player controls for volume and fullscreen.",
+    viewers: "viewers at last check", checked: "Checked", refreshHint: "Status refreshes on request (cached for 30 seconds).",
+  },
   profile: {
     beforeSearch: "Search a username to see their profile and public content.",
     viewMore: "View more", loadingMore: "Loading more…",

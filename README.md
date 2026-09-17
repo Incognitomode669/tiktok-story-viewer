@@ -47,3 +47,13 @@ credits; it prints only status/counts, never the key or raw response.
 
 See `docs/provider-contract.md` and `docs/profile-providers.md` for response mapping,
 pagination, caching and current live-test limitations.
+
+### TikTok LIVE
+
+Search a username, select **Live**, then press play when a broadcast is available. The player provides volume and fullscreen controls. **Refresh** checks status again; checks are cached for 30 seconds and never polled automatically. Viewer count is a snapshot at the displayed check time.
+
+Uses Konbini's documented user live endpoint and mpegts.js for FLV playback. Other stream formats are reported as unsupported. Stream URLs are kept server-side behind temporary opaque handles; the proxy forwards no API credentials. Leaving the tab destroys the player and cancels its stream. A persistent Node server is recommended: hosting platforms that limit response duration can interrupt long broadcasts.
+
+Documentation: https://docs.konbiniapi.com/reference/api/tiktok/get-user-live-stream and https://github.com/xqq/mpegts.js
+
+Validation: production build, lint, 21 unit tests, and browser checks for real offline status, stream failure, and player cleanup passed. Konbini reported ewwzel offline during verification; actual live broadcast decoding remains unverified.

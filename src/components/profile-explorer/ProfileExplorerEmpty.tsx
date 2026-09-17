@@ -10,6 +10,7 @@ export function ProfileExplorerEmpty() {
     </div>
     <div className="profile-explorer__tabs" role="group" aria-label={copy.profile.heading}>
       <button type="button" className="profile-explorer__tab" disabled>{copy.profile.stories}</button>
+      <button type="button" className="profile-explorer__tab" disabled>{copy.live.heading}</button>
       {profileSections.map(key => <button type="button" className="profile-explorer__tab" disabled key={key}>{copy.profile.sections[key]}</button>)}
     </div>
     <div className="profile-explorer__content"><p className="profile-explorer__state">{copy.profile.beforeSearch}</p></div>
