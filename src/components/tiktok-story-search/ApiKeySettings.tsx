@@ -40,7 +40,7 @@ export function ApiKeySettings() {
       <form onSubmit={event => { event.preventDefault(); void save(); }}>
         <label htmlFor="konbini-key">KonbiniAPI key</label>
         <div className="api-settings__input"><input id="konbini-key" type={visible ? "text" : "password"} value={key} onChange={event => setKey(event.target.value)} autoComplete="off" spellCheck={false} autoCapitalize="none" maxLength={2048} placeholder="Paste your API key" required disabled={busy} /><button type="button" onClick={() => setVisible(v => !v)} aria-pressed={visible}>{visible ? "Hide" : "Show"}</button></div>
-        <p className="api-settings__hint">Stored temporarily on this server for up to 24 hours. A server restart clears it. Your browser keeps only a session identifier.</p>
+        <p className="api-settings__hint">Saved for up to 24 hours in an encrypted, HTTP-only cookie. Your key survives refreshes and server restarts.</p>
         <a href="https://konbiniapi.com" target="_blank" rel="noreferrer">Get a key from KonbiniAPI ↗</a>
         {error && <p className="api-settings__error" role="alert">{error}</p>}
         <div className="api-settings__actions"><button type="button" disabled={busy} onClick={() => void save(true)}>Remove personal key</button><button className="api-settings__save" type="submit" disabled={busy || !key.trim()}>{busy ? "Saving…" : "Save key"}</button></div>

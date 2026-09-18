@@ -26,6 +26,7 @@ export class KonbiniStoryProvider implements TikTokStoryProvider {
     } catch (error) {
       if (error instanceof KonbiniError) {
         if (error.code === "not_configured") throw new StoryProviderError("NOT_CONFIGURED", 503);
+        if (error.code === "key_session_invalid") throw new StoryProviderError("KEY_SESSION_INVALID", 401);
         if (error.code === "private_account") throw new StoryProviderError("PRIVATE_ACCOUNT", 403);
         if (error.status === 402) throw new StoryProviderError("PROVIDER_CREDIT", 503);
         if (error.status === 404) throw new StoryProviderError("USER_NOT_FOUND", 404);

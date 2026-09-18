@@ -62,4 +62,8 @@ Validation: production build, lint, 21 unit tests, and browser checks for real o
 
 Open **API settings** in the header, paste a KonbiniAPI key, and choose **Save key**, then **Done**. Saving checks formatting; the next provider request checks authorization. The page reloads to clear previous client results. **Remove personal key** returns to the environment key if configured.
 
-Personal keys stay in server process memory for up to 24 hours and are removed on restart. The browser receives an opaque HttpOnly, SameSite=Strict session cookie (Secure over HTTPS), not the key. Provider caches and media handles are scoped to the key session. An expired session cookie does not silently fall back to the environment key. For multiple server instances, replace this process-local session store with a shared secure store before using personal keys across instances.
+Personal keys are stored for up to 24 hours in AES-256-GCM encrypted, HttpOnly, SameSite=Strict cookies (Secure over HTTPS). Every server instance decrypts them with the same server-only API_KEY_COOKIE_SECRET. They survive refreshes, cold starts, and redeploys when the secret is unchanged. Invalid personal cookies never silently fall back to the environment key. Removing a key deletes the browser cookie; copied cookies remain valid until expiry. Rotating the encryption secret invalidates all personal sessions.
+
+For Vercel: generate a random 32-byte hexadecimal secret, add it as API_KEY_COOKIE_SECRET in Project Settings → Environment Variables for your deployment environments, then redeploy. The generation command is in .env.example. Never use a NEXT_PUBLIC_ prefix. Set a secret in .env.local for local development too. Users with old in-memory sessions must save their key again once after upgrading.
+
+Media handle registries remain process-local; cross-instance media playback is a separate deployment limitation from credential persistence.
