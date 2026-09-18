@@ -81,7 +81,8 @@ export const copy = {
   storyCount: (count: number) => `${count} ${count === 1 ? "Story" : "Stories"} available`,
   errors: {
     INVALID_USERNAME: "Enter a valid TikTok username: up to 24 letters, numbers, underscores or periods, with no period at the end.",
-    NOT_CONFIGURED: "The Story service is not configured yet. Add KONBINI_API_KEY to the server environment.",
+    NOT_CONFIGURED: "No API key is available for this request. Open API settings and save your KonbiniAPI key on this website.",
+    KEY_SESSION_INVALID: "Your saved API key session expired or could not be read. Open API settings and save your key again. If this repeats, the site owner needs to check API_KEY_COOKIE_SECRET on this deployment.",
     PROVIDER_CREDIT: "KonbiniAPI credits are exhausted. Check the connected account balance.",
     PROVIDER_ERROR: "The Story provider is unavailable right now. Please try again later.",
     PROVIDER_RESPONSE_CHANGED: "The provider returned an unsupported response. Please try again later.",
